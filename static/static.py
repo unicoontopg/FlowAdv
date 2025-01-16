@@ -2,15 +2,18 @@
 
 HTML = """
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flow</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/twemoji@11.3.0/2/svg/1f4fd.svg" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
         }
+
         body, html {
             margin: 0;
             padding: 0;
@@ -18,40 +21,41 @@ HTML = """
             height: 100%;
             font-size: 16px;
             font-family: 'Poppins', Arial, sans-serif;
-            background-color: #1a1a1a;
-            color: white;
+            color: #333;
+            background-color: #f3f3f3;
             display: flex;
-            align-items: center;
             justify-content: center;
-            overflow-y: auto;
+            align-items: center;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
         }
 
         #addon {
-            background: rgba(0, 0, 0, 0.85);
+            background: #fff;
+            border-radius: 10px;
             padding: 20px;
-            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
             width: 90%;
-            max-width: 500px;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        body.dark-mode #addon {
+            background: #1e1e1e;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         h1 {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 1.8rem;
             margin-bottom: 10px;
         }
 
         h2 {
-            font-size: 14px;
-            font-weight: 400;
-            font-style: italic;
-            margin-bottom: 20px;
-            color: #ccc;
-        }
-
-        .description {
-            font-size: 14px;
+            font-size: 0.9rem;
+            font-weight: 300;
             margin-bottom: 20px;
         }
 
@@ -60,141 +64,149 @@ HTML = """
             align-items: center;
             justify-content: space-between;
             margin-bottom: 15px;
-            background: linear-gradient(90deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-            padding: 10px;
+            background: linear-gradient(45deg, #ff7eb3, #ff758c);
             border-radius: 8px;
-            transition: transform 0.2s;
+            padding: 10px;
+            transition: transform 0.2s ease;
         }
 
         .provider-group:hover {
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
 
         .provider-label {
-            font-size: 16px;
+            font-size: 0.95rem;
             font-weight: 400;
-            color: white;
-            text-align: left;
-            flex-grow: 1;
+            color: #fff;
         }
 
         .provider-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
-            accent-color: #f09433;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
         }
 
         button {
             border: none;
             outline: none;
-            background: #6c63ff;
-            color: white;
-            padding: 12px 20px;
-            font-size: 16px;
-            font-weight: 600;
+            background-color: #6200ea;
+            color: #fff;
+            padding: 10px 15px;
             border-radius: 5px;
+            font-size: 1rem;
             cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.3s;
+            transition: background-color 0.3s;
         }
 
         button:hover {
-            background: #574bff;
+            background-color: #3700b3;
         }
 
-        .toggle-mode {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: transparent;
-            border: 2px solid white;
-            color: white;
-            padding: 10px 15px;
+        button:active {
+            background-color: #bb86fc;
+        }
+
+        #manifestBox {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #ececec;
             border-radius: 5px;
-            font-size: 14px;
-            font-weight: 600;
+            text-align: left;
+            font-size: 0.9rem;
+            display: none;
+            color: #000;
+        }
+
+        body.dark-mode #manifestBox {
+            background-color: #2e2e2e;
+            color: #fff;
+        }
+
+        #switchMode {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            border-radius: 5px;
+            background-color: #ddd;
             cursor: pointer;
         }
 
-        .toggle-mode:hover {
-            background: white;
-            color: black;
-        }
-
-        /* Light mode styles */
-        body.light-mode {
-            background-color: #f7f7f7;
-            color: black;
-        }
-
-        body.light-mode #addon {
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        body.light-mode h2 {
-            color: #555;
-        }
-
-        body.light-mode .provider-group {
-            background: linear-gradient(90deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-        }
-
-        body.light-mode button {
-            background: #6c63ff;
-            color: white;
-        }
-
-        body.light-mode .toggle-mode {
-            border: 2px solid black;
-            color: black;
-        }
-
-        body.light-mode .toggle-mode:hover {
-            background: black;
-            color: white;
+        body.dark-mode #switchMode {
+            background-color: #444;
+            color: #fff;
         }
     </style>
 </head>
 <body>
-    <button class="toggle-mode" onclick="toggleMode()">Switch to Light Mode</button>
+    <div id="switchMode">Switch to Dark Mode</div>
     <div id="addon">
         <h1>Flow</h1>
-        <h2>v1.0.0</h2>
-        <p class="description">Configura i tuoi provider: Si noti che se si attiva la ricerca veloce i risultati saranno meno accurati ma più veloci.</p>
+        <h2>v1.5.0</h2>
+        <p>Configura i tuoi provider: Si noti che se si attiva la ricerca veloce i risultati saranno meno accurati ma più veloci.</p>
         <h3>Select Providers:</h3>
         <form id="provider-form">
             <div class="provider-group">
                 <label for="streamingcommunity" class="provider-label">
-                    <input type="checkbox" id="streamingcommunity"> StreamingCommunity
+                    StreamingCommunity
                 </label>
+                <input type="checkbox" id="streamingcommunity">
             </div>
             <div class="provider-group">
                 <label for="lordchannel" class="provider-label">
-                    <input type="checkbox" id="lordchannel"> LordChannel
+                    LordChannel
                 </label>
+                <input type="checkbox" id="lordchannel">
             </div>
             <div class="provider-group">
                 <label for="streamingwatch" class="provider-label">
-                    <input type="checkbox" id="streamingwatch"> StreamingWatch
+                    StreamingWatch
                 </label>
+                <input type="checkbox" id="streamingwatch">
             </div>
             <div class="provider-group">
                 <label for="animeworld" class="provider-label">
-                    <input type="checkbox" id="animeworld"> Animeworld
+                    Animeworld
                 </label>
+                <input type="checkbox" id="animeworld">
             </div>
         </form>
         <button id="generateManifestButton">Generate Manifest</button>
+        <div id="manifestBox"></div>
     </div>
     <script>
-        function toggleMode() {
-            const body = document.body;
-            const isLightMode = body.classList.toggle('light-mode');
-            const toggleButton = document.querySelector('.toggle-mode');
-            toggleButton.textContent = isLightMode ? 'Switch to Dark Mode' : 'Switch to Light Mode';
-        }
+        // Dark Mode Toggle
+        const switchMode = document.getElementById("switchMode");
+        const body = document.body;
+
+        switchMode.addEventListener("click", () => {
+            body.classList.toggle("dark-mode");
+            switchMode.textContent = body.classList.contains("dark-mode") ? "Switch to Light Mode" : "Switch to Dark Mode";
+        });
+
+        // Generate Manifest Functionality
+        const generateManifestButton = document.getElementById("generateManifestButton");
+        const manifestBox = document.getElementById("manifestBox");
+
+        generateManifestButton.addEventListener("click", () => {
+            const selectedProviders = [];
+            document.querySelectorAll("#provider-form input[type='checkbox']").forEach((checkbox) => {
+                if (checkbox.checked) {
+                    selectedProviders.push(checkbox.id);
+                }
+            });
+
+            if (selectedProviders.length === 0) {
+                manifestBox.textContent = "No providers selected.";
+                manifestBox.style.display = "block";
+                return;
+            }
+
+            const manifestUrl = `https://flow-3qre.onrender.com/${selectedProviders.join("|")}`;
+            manifestBox.textContent = `Generated Manifest URL: \n${manifestUrl}`;
+            manifestBox.style.display = "block";
+        });
     </script>
 </body>
 </html>
