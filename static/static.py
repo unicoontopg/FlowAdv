@@ -161,7 +161,7 @@ HTML = """
     <button class="toggle-mode" onclick="toggleMode()">Switch to Light Mode</button>
     <div id="addon">
         <h1>Flow</h1>
-        <h2>v1.5.0</h2>
+        <h2>v1.0.0</h2>
         <p class="description">Configura i tuoi provider: Si noti che se si attiva la ricerca veloce i risultati saranno meno accurati ma più veloci.</p>
         <h3>Select Providers:</h3>
         <form id="provider-form">
