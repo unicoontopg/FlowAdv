@@ -2,210 +2,167 @@
 
 HTML = """
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
     <title>Flow</title>
-    <link rel="icon" href="https://cdn.jsdelivr.net/npm/twemoji@11.3.0/2/svg/1f4fd.svg" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/twemoji@11.3.0/2/svg/1f4fd.svg" type="image/svg+xml">
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
+        * { box-sizing: border-box; }
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            font-size: 16px;
-            font-family: 'Poppins', Arial, sans-serif;
-            color: #333;
-            background-color: #f3f3f3;
+            font-size: 2.2vh;
+            font-family: 'Open Sans', Arial, sans-serif;
             display: flex;
+            align-items: flex-start;
             justify-content: center;
-            align-items: center;
+            overflow-y: auto;
+            transition: background-color 0.3s, color 0.3s;
         }
-
-        body.dark-mode {
-            background-color: #121212;
-            color: #ffffff;
+        body.light {
+            background: #f7f7f7;
+            color: #333;
         }
-
+        body.dark {
+            background: #121212;
+            color: white;
+        }
         #addon {
-            background: #fff;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1.5vh;
             border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 90%;
+            width: 65vh;
+            max-width: 100%;
             text-align: center;
+            margin-top: 10vh;
+            transition: background 0.3s;
         }
-
-        body.dark-mode #addon {
-            background: #1e1e1e;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        body.light #addon {
+            background: rgba(255, 255, 255, 0.8);
         }
-
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            font-size: 0.9rem;
-            font-weight: 300;
-            margin-bottom: 20px;
-        }
-
-        .provider-group {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            background: linear-gradient(45deg, #ff7eb3, #ff758c);
-            border-radius: 8px;
-            padding: 10px;
-            transition: transform 0.2s ease;
-        }
-
-        .provider-group:hover {
-            transform: scale(1.02);
-        }
-
-        .provider-label {
-            font-size: 0.95rem;
-            font-weight: 400;
-            color: #fff;
-        }
-
-        .provider-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        button {
-            border: none;
-            outline: none;
-            background-color: #6200ea;
-            color: #fff;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #3700b3;
-        }
-
-        button:active {
-            background-color: #bb86fc;
-        }
-
-        #manifestBox {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #ececec;
-            border-radius: 5px;
-            text-align: left;
-            font-size: 0.9rem;
-            display: none;
-            color: #000;
-        }
-
-        body.dark-mode #manifestBox {
-            background-color: #2e2e2e;
-            color: #fff;
-        }
-
-        #switchMode {
+        .theme-toggle {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 8px 12px;
-            font-size: 0.85rem;
-            border-radius: 5px;
-            background-color: #ddd;
+            top: 2vh;
+            right: 2vh;
             cursor: pointer;
+            font-size: 3vh;
         }
-
-        body.dark-mode #switchMode {
-            background-color: #444;
-            color: #fff;
+        .provider-group {
+            margin-bottom: 2vh;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5vh;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        body.light .provider-group {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        .provider-group label {
+            flex-grow: 1;
+            font-size: 2.2vh;
+            text-align: left;
+        }
+        .provider-group input[type="checkbox"] {
+            margin-right: 1vh;
+            width: 4vh;
+            height: 4vh;
+        }
+        button {
+            border: 0;
+            outline: 0;
+            color: white;
+            background: #8A5AAB;
+            padding: 1.2vh 3.5vh;
+            font-size: 2.2vh;
+            font-weight: 600;
+            cursor: pointer;
+            width: 80%;
+            max-width: 35vh;
+            margin: 1vh auto;
+            transition: box-shadow 0.1s ease-in-out;
+        }
+        button:hover {
+            box-shadow: 0 0 1vh rgba(0, 0, 0, 0.2);
+        }
+        button:active {
+            box-shadow: 0 0 0 0.5vh white inset;
+        }
+        #manifestBox {
+            margin-top: 2vh;
+            padding: 2vh;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            display: none;
+            white-space: pre-wrap;
         }
     </style>
 </head>
-<body>
-    <div id="switchMode">Switch to Dark Mode</div>
+<body class="light">
+    <div class="theme-toggle" id="themeToggle">🌙</div>
     <div id="addon">
         <h1>Flow</h1>
-        <h2>v1.5.0</h2>
-        <p>Configura i tuoi provider: Si noti che se si attiva la ricerca veloce i risultati saranno meno accurati ma più veloci.</p>
-        <h3>Select Providers:</h3>
+        <p>Seleziona i provider per generare il manifest:</p>
         <form id="provider-form">
             <div class="provider-group">
-                <label for="streamingcommunity" class="provider-label">
-                    StreamingCommunity
+                <label for="streamingcommunity">
+                    <input type="checkbox" id="streamingcommunity"> StreamingCommunity
                 </label>
-                <input type="checkbox" id="streamingcommunity">
             </div>
             <div class="provider-group">
-                <label for="lordchannel" class="provider-label">
-                    LordChannel
+                <label for="lordchannel">
+                    <input type="checkbox" id="lordchannel"> LordChannel
                 </label>
-                <input type="checkbox" id="lordchannel">
             </div>
             <div class="provider-group">
-                <label for="streamingwatch" class="provider-label">
-                    StreamingWatch
+                <label for="streamingwatch">
+                    <input type="checkbox" id="streamingwatch"> StreamingWatch
                 </label>
-                <input type="checkbox" id="streamingwatch">
-            </div>
-            <div class="provider-group">
-                <label for="animeworld" class="provider-label">
-                    Animeworld
-                </label>
-                <input type="checkbox" id="animeworld">
             </div>
         </form>
-        <button id="generateManifestButton">Generate Manifest</button>
+        <button id="generateManifestButton">Genera Manifest</button>
         <div id="manifestBox"></div>
     </div>
     <script>
-        // Dark Mode Toggle
-        const switchMode = document.getElementById("switchMode");
-        const body = document.body;
-
-        switchMode.addEventListener("click", () => {
-            body.classList.toggle("dark-mode");
-            switchMode.textContent = body.classList.contains("dark-mode") ? "Switch to Light Mode" : "Switch to Dark Mode";
+        // Toggle Light/Dark Mode
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            document.body.classList.toggle('light');
+            themeToggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
         });
 
-        // Generate Manifest Functionality
-        const generateManifestButton = document.getElementById("generateManifestButton");
-        const manifestBox = document.getElementById("manifestBox");
+        // Function to generate the manifest
+        function generateManifest() {
+            let manifest = "|";
+            const providers = {
+                "streamingcommunity": "SC",
+                "lordchannel": "LC",
+                "streamingwatch": "SW"
+            };
 
-        generateManifestButton.addEventListener("click", () => {
-            const selectedProviders = [];
-            document.querySelectorAll("#provider-form input[type='checkbox']").forEach((checkbox) => {
-                if (checkbox.checked) {
-                    selectedProviders.push(checkbox.id);
+            // Check selected providers
+            for (const id in providers) {
+                if (document.getElementById(id).checked) {
+                    manifest += providers[id] + "|";
                 }
-            });
-
-            if (selectedProviders.length === 0) {
-                manifestBox.textContent = "No providers selected.";
-                manifestBox.style.display = "block";
-                return;
             }
 
-            const manifestUrl = `https://flow-3qre.onrender.com/${selectedProviders.join("|")}`;
-            manifestBox.textContent = `Generated Manifest URL: \n${manifestUrl}`;
+            const instanceUrl = "https://flow-3qre.onrender.com/"; 
+            const manifestUrl = `${instanceUrl}/${manifest}/manifest.json`;
+            return manifestUrl;
+        }
+
+        // Display generated manifest
+        document.getElementById('generateManifestButton').addEventListener('click', () => {
+            const manifestUrl = generateManifest();
+            const manifestBox = document.getElementById("manifestBox");
             manifestBox.style.display = "block";
+            manifestBox.innerText = manifestUrl;
         });
     </script>
 </body>
